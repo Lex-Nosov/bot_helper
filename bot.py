@@ -1,5 +1,7 @@
 from telebot.async_telebot import AsyncTeleBot
+from telebot import types
 import asyncio
+import aiosqlite
 
 from config import API_TOKEN
 
@@ -9,6 +11,11 @@ bot = AsyncTeleBot(API_TOKEN)
 @bot.message_handler(commands=['start'])
 async def welcome_message(message):
     await bot.reply_to(message, 'Hello, Lex')
+
+@bot.message_handler(commands=['Напоминание'])
+async def remainder(messasge):
+    await bot.send_message()
+    await bot.register_next_step_handler()
 
 
 if __name__ == '__main__':
