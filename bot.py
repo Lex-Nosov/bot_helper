@@ -1,21 +1,21 @@
 from telebot.async_telebot import AsyncTeleBot
-from telebot import types
 import asyncio
-import aiosqlite
 
 from config import API_TOKEN
+from remainder_db_handler import User
 
 bot = AsyncTeleBot(API_TOKEN)
 
 
 @bot.message_handler(commands=['start'])
 async def welcome_message(message):
-    await bot.reply_to(message, 'Hello, Lex')
+    await User.add_user(message.chat.id, message.from_user.first_name)
+    await bot.reply_to(message, f'Hello, {message.from_user.first_name}')
 
-@bot.message_handler(commands=['Напоминание'])
-async def remainder(messasge):
-    await bot.send_message()
-    await bot.register_next_step_handler()
+
+@bot.message_handler(commands=['remainder'])
+async def remainder(message):
+    await bot.send_message(message.chat.id, 'какое событие нужно запомнить?')
 
 
 if __name__ == '__main__':
