@@ -1,9 +1,10 @@
 import aiosqlite
 import sqlite3
 import datetime
+import peewee
 
-DBCONNECT = 'data.sqlite'
-
+# DBCONNECT = 'data.sqlite'
+db = peewee.SqliteDatabase('db_bot_helper')
 
 class User:
 
@@ -26,14 +27,6 @@ class User:
 
 
 class Remainder:
-
-    def __init__(self):
-        owner_remainder = None
-        id = None
-        creation_date = datetime.date
-        event_date = None
-        description = None
-        subject = None
 
     async def create_remainder(self, message_subject, event_date, description, owner_remainder):
         pass
