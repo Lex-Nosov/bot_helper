@@ -10,6 +10,7 @@ async def add_user(user_tg_id, first_name):
         await UserModel.create_table()
         await RemainderModel.create_table()
 
-        user = UserModel.create(user_id=user_tg_id, name=first_name)
+        user = await UserModel.create(user_id=user_tg_id, name=first_name)
         assert user
+        assert user.user_id
         

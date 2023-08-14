@@ -1,6 +1,6 @@
 from peewee_aio import Manager, fields, AIOModel
 
-manager = Manager('db_bot.db')
+manager = Manager('aiosqlite:///:memory:')
 
 @manager.register
 class UserModel(AIOModel):
@@ -8,7 +8,7 @@ class UserModel(AIOModel):
     name = fields.CharField(max_length=50)
 
 @manager.register
-class RemainderModel(AIOModel)
+class RemainderModel(AIOModel):
     subject = fields.CharField(max_length=50)
     description = fields.TextField()
-    owner = fields.ForeignKeyField('User')
+    owner = fields.ForeignKeyField(UserModel)
