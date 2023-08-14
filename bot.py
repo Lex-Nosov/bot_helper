@@ -2,15 +2,23 @@ from telebot.async_telebot import AsyncTeleBot
 import asyncio
 
 from config import API_TOKEN
-from remainder_db_handler import add_user
+from remainder_db_handler import User
 
 bot = AsyncTeleBot(API_TOKEN)
 
 
 @bot.message_handler(commands=['start'])
 async def welcome_message(message):
-    await add_user(message.chat.id, message.from_user.first_name)
+    user = User(message.chat.id, message.from_user.first_name)
+    await user.add_user()
     await bot.reply_to(message, f'Hello, {message.from_user.first_name}')
+
+
+@bot.message_handler(commands=['delete'])
+async def delete_user(message):
+    user = User(message.chat.id, message.from_user.first_name)
+    await user.remove_user()
+    await bot.reply_to(message, f'User {message.from_user.first_name} deleted')
 
 
 @bot.message_handler(commands=['remainder'])
