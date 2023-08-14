@@ -1,19 +1,14 @@
-from peewee import Model, SqliteDatabase
-from datetime import date
+from peewee_aio import Manager, fields, AIOModel
 
-class User(Model):
-    user_name = Model.CharField(max_length=100)
-    user_id = Model.IntegerField()
+manager = Manager('db_bot.db')
 
-    class Meta:
-        database = db
+@manager.register
+class UserModel(AIOModel):
+    user_id = fields.IntegerField()
+    name = fields.CharField(max_length=50)
 
-class Renaibder(Model):
-    create_date = Model.DateField(date)
-    edit_date = Model.DateField(date)
-    event_date = Model.DateField(date)
-    subject = Model.CharField(max_length=100)
-    description = Model.TextField()
-
-    class Meta:
-        datebase = db
+@manager.register
+class RemainderModel(AIOModel)
+    subject = fields.CharField(max_length=50)
+    description = fields.TextField()
+    owner = fields.ForeignKeyField('User')

@@ -1,38 +1,15 @@
-import aiosqlite
-import sqlite3
-import datetime
 import peewee
+import peewee_aio
+import datetime
+import asyncio
 
-# DBCONNECT = 'data.sqlite'
-db = peewee.SqliteDatabase('db_bot_helper')
+from db_models import UserModel, RemainderModel, manager
 
-class User:
+async def add_user(user_tg_id, first_name):
+    with manager.connection():
+        await UserModel.create_table()
+        await RemainderModel.create_table()
 
-    def __init__(self):
-        tg_id = None
-        name = None
-
-    @classmethod
-    async def add_user(cls, tgid, name):
-        self = User()
-        self.tg_id = tgid
-        self.name = name
-        db = await aiosqlite.connect(DBCONNECT)
-        db.row_factory = sqlite3.Row
-        _user = await db.execute(f"INSERT INTO users (tg_id, name) values(?,?)", (self.tg_id, self.name))
-        await db.commit()
-
-    async def remove_user(self):
-        pass
-
-
-class Remainder:
-
-    async def create_remainder(self, message_subject, event_date, description, owner_remainder):
-        pass
-
-    async def remove_remainder(self):
-        pass
-
-    async def change_remainder(self):
-        pass
+        user = UserModel.create(user_id=user_tg_id, name=first_name)
+        assert user
+        
