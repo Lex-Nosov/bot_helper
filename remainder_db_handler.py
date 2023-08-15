@@ -1,8 +1,3 @@
-import peewee
-import peewee_aio
-import datetime
-import asyncio
-
 from db_models import UserModel, RemainderModel, manager
 
 
@@ -17,10 +12,6 @@ class User:
             await UserModel.create_table()
 
             await UserModel.create(user_id=self.tg_id, name=self.name)
-
-    async def check_user(self):
-        async with manager.connection():
-            pass
 
     async def remove_user(self):
         async with manager.connection():

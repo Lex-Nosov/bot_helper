@@ -3,6 +3,7 @@ import asyncio
 
 from config import API_TOKEN
 from remainder_db_handler import User
+from buttons import main_butt
 
 bot = AsyncTeleBot(API_TOKEN)
 
@@ -11,7 +12,8 @@ bot = AsyncTeleBot(API_TOKEN)
 async def welcome_message(message):
     user = User(message.chat.id, message.from_user.first_name)
     await user.add_user()
-    await bot.reply_to(message, f'Hello, {message.from_user.first_name}')
+    await bot.send_message(message.from_user.id, 'Выбери действие', parse_mode='HTML', reply_markup=main_butt(size=2))
+    await bot.reply_to(message, f'Привет, {message.from_user.first_name}! Добро пожаловать в бота-помощника :)')
 
 
 @bot.message_handler(commands=['delete'])
