@@ -1,8 +1,8 @@
-from telebot.types import ReplyKeyboardMarkup, KeyboardButton
+from telebot.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup
 
 
-def main_butt(size=2):
-    markup = ReplyKeyboardMarkup(row_width=size, resize_keyboard=True)
-    row = ["удалить своего пользователя", "Создать напоминание"]
-    markup.add(*row)
+def main_butt():
+    markup = ReplyKeyboardMarkup(resize_keyboard=True)
+    button_create_remainder = KeyboardButton('создать напоминание')
+    markup.add(button_create_remainder)
     return markup
