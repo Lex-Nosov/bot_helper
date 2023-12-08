@@ -10,13 +10,13 @@ from buttons import main_butt
 bot = AsyncTeleBot(API_TOKEN)
 
 
-async def table_check():
-    path = os.getcwd()
-    files = os.listdir(path)
-    for name_file in files:
-        if re.search('sqlite', name_file):
-            return
-    await table_creation()
+# async def table_check():
+#     path = os.getcwd()
+#     files = os.listdir(path)
+#     for name_file in files:
+#         if re.search('sqlite', name_file):
+#             return
+#     await table_creation()
 
 
 @bot.message_handler(commands=['start'])
